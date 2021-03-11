@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+    <div>
+     <h2>To Do List</h2>
+        <div>
+            <div class="a1">
+           やること
+           </div>
+           <input id="todolist" cols="10" rows="10" placeholder="やることを入力">
+        
+        </div>
+        <div>
+            <button id="tsuika">追加</button>
+
+        </div>
+
+    <h2>List</h2>
+    
+    
+    <!-- 保存されたデータが表示される箇所 -->
+
+        <div>
+            <div id="output" class="uchikeshi">
+              
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- ここから<Script> -->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase.js"></script> 
+     
+        
+        <script>
+                var firebaseConfig = {
+                    var firebaseConfig = {
+    apiKey: "",
+    authDomain: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: "",
+    databaseURL: "",
+  };
+
+                                    firebase.initializeApp(firebaseConfig);
+
+
+                     const newPostRef = firebase.database().ref();
+
+                    $("#tsuika").on("click", function () {
+
+                    // データを登録で送る
+                    newPostRef.push({
+                    //内容
+                    yarukoto:
+
+                    $("#todolist").val(),
+
+                    })
+
+
+
+                    $("#todolist").val(""); //空にする
+                    
+                    });
+
+                    newPostRef.on("child_added", function (data) {
+                        //ここに保存されたデータが全て入ってくる
+                        
+                        let v = data.val();
+                        
+                        //console.logで受信=firebaseに登録されている中身を確認しよう！
+                        let str = `<input type="checkbox" style="checkbox">${v.yarukoto}<br>`;
+                        //テンプレートリテラル `` を活用して変数にhtmlを埋め込もう！
+                        
+
+                        // ここでデータをhtmlに埋め込む prependには変数を埋め込もう！
+                        $("#output").prepend(str);
+
+                    
+                      });
+
+                      
+
+                      $(".checkbox").click(function() {
+
+                            if ($(this).is(":checked"))
+                            {
+                            $(this).closest("tr").css("text-decoration", "line-through");
+                            }
+                            else {
+                            $(this).closest("tr").css("text-decoration", "none");
+                            }
+
+                         });
+                                        
+
+                    
+
+        </script>
+
+
+</body>
+</html>
